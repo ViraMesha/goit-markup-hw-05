@@ -19,11 +19,11 @@
   --header-border-cl: #ececec;
   --portfolio-border-cl: #eeeeee;
   --footer-socials-bg-cl: rgba(255, 255, 255, 0.1);
-
+  --icons-cl: #AFB1B8;
 
   /* others */
 
-  --icons-cl: #AFB1B8;
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   --card-gap: 30px;
   --card-item: 3;
@@ -35,6 +35,10 @@ body {
   font-size: 14px;
   line-height: calc(24 / 14);
   letter-spacing: 0.03em;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 /* reset styles */
@@ -120,6 +124,11 @@ img {
   cursor: pointer;
   font-size: 16px;
   border-radius: 4px;
+  transition: color var(--transition);
+}
+
+.current {
+  transition: color var(--transition);
 }
 
 .interact:hover,
@@ -187,17 +196,26 @@ img {
   color: var(--main-txt-cl);
 }
 
+.header-current {
+  position: relative;
+}
+
+.current::after{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: var(--accent-txt-cl);
+}
+
 .contact-list {
   display: flex;
   gap: 50px;
   margin-left: auto;
 }
-
-/* .contact-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-} */
 
 .contact-link {
 gap: 10px;
@@ -253,6 +271,7 @@ gap: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
   background-color: var(--accent-txt-cl);
   color: var(--secondary-txt-cl);
+  transition: background-color var(--transition)
 }
 
 .hero-btn:hover,
@@ -288,6 +307,29 @@ gap: 10px;
 
 .about {
   padding-top: 0;
+}
+
+.about-wrapper {
+  position: relative;
+}
+
+.about-box {
+  position: absolute;
+  bottom: 0;
+  
+  width: 370px;
+  height: 70px;
+}
+
+.about-txt {
+  height: 100%;
+  padding: 27px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+  text-transform: uppercase;
+color: var(--secondary-txt-cl);
+  background: rgba(47, 48, 58, 0.8);
 }
 
 /* Our team */
@@ -343,6 +385,15 @@ gap: 10px;
   line-height: calc(26 / 16);
   letter-spacing: 0.03em;
   background-color: var(--light-grey-cl);
+  transition: color var(--transition), 
+  background-color var(--transition), 
+  box-shadow var(--transition);
+}
+
+.active {
+  transition: color var(--transition), 
+  background-color var(--transition), 
+  box-shadow var(--transition);
 }
 
 .filters-btn:hover,
@@ -354,6 +405,34 @@ gap: 10px;
   0px 1px 2px rgba(0, 0, 0, 0.08), 
   0px 2px 2px rgba(0, 0, 0, 0.12);
 }
+
+/* Portfolio overlay */
+
+.portfolio-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.txt-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 63px 24px;
+  background-color: rgba(33, 150, 243, 0.9);
+  transform: translateY(0);
+  transition: transform var(--transition);
+}
+
+.portfolio-link:hover .txt-wrapper {
+  transform: translateY(-100%);
+}
+
+.overlay-txt {
+  font-size: 18px;
+line-height: calc(28 / 18);
+color: var(--secondary-txt-cl);
+}
+
 
 .portfolio-content {
   padding: 20px 24px;
@@ -373,9 +452,13 @@ gap: 10px;
   line-height: calc(30 / 16);
 }
 
+.portfolio-link {
+  transition: box-shadow var(--transition);
+  display: block;
+}
+
 .portfolio-link:hover,
 .portfolio-link:focus {
-  display: block;
 box-shadow: 0px 1px 1px rgb(0 0 0 / 12%), 0px 4px 4px rgb(0 0 0 / 6%), 
 1px 4px 6px rgb(0 0 0 / 16%);
 }
@@ -394,6 +477,7 @@ box-shadow: 0px 1px 1px rgb(0 0 0 / 12%), 0px 4px 4px rgb(0 0 0 / 6%),
   color: var(--icons-cl);
   border: 1px solid var(--icons-cl);
     border-radius: 4px;
+    transition: color var(--transition);
 }
 
 .clients-icon {
@@ -475,6 +559,7 @@ gap: 10px;
   height: 44px;
   border-radius: 50%;
   color: var(--icons-cl);
+  transition: color var(--transition), background-color var(--transition);
 }
 
 .socials-icon {
@@ -492,4 +577,55 @@ background-color: var(--accent-txt-cl);
   background-color: var(--footer-socials-bg-cl);
 }
 
+/* Modal window */
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 1000ms linear, visibility 1000ms linear;
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal {
+  position: relative;
+  width: 528px;
+  height: 581px;
+  background-color: var(--light-bg-cl);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: opacity 1000ms linear, visibility 1000ms linear;
+}
+
+.modal-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  background-color: var(--light-bg-cl);
+  border-radius: 50%;
+border: 1px solid rgba(0, 0, 0, 0.1);
+cursor: pointer;
+}
