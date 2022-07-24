@@ -127,7 +127,7 @@ img {
   transition: color var(--transition);
 }
 
-.current {
+.interact {
   transition: color var(--transition);
 }
 
